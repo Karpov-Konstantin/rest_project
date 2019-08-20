@@ -26,7 +26,7 @@ class Citizen(models.Model):
     name = models.CharField(max_length=100)
     birth_date = models.DateField()  # Проверить, что дата является валидной можно с помощью datetime.date
     gender = models.CharField(max_length=6, choices=GENDER_FIELDS)
-    # relatives = ArrayField(models.IntegerField())
+    relatives = ArrayField(models.IntegerField(), null=True, blank=True)
 
     def __str__(self):
         return self.name + ' with citizen_id ' + str(self.citizen_id)

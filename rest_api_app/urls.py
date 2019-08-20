@@ -13,9 +13,9 @@ urlpatterns = [
     path('imports/', ImportCreateView.as_view()),  # POST
     path('imports/<int:import_id>/citizens/', ImportReadView.as_view()),  # GET
     path('imports/<int:import_id>/citizens/<int:citizen_id>/', CitizenUpdateView.as_view()),  # PATCH
-    # path('imports/<int:import_id>/citizens/birthdays', CitizenView.as_view()),  # GET
-    # path('imports/<int:import_id>/towns/stat/percentile/age/', CitizenView.as_view()),  # GET
+    path('imports/<int:import_id>/citizens/birthdays/', ListBirthdays.as_view()),  # GET
+    path('imports/<int:import_id>/towns/stat/percentile/age/', ListPercentiles.as_view()),  # GET
 
-    path('imports/<int:citizen_id>/citizens/', CitizenUpdateView.as_view()),  # GET
+    # path('imports/<int:citizen_id>/citizens/', CitizenUpdateView.as_view()),  # GET
 
 ]
