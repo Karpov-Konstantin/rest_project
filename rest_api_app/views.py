@@ -8,7 +8,6 @@ from django.db import transaction
 from collections import defaultdict
 from datetime import date
 import numpy as np
-# Create your views here.
 
 
 class ImportCreateView(generics.CreateAPIView):
@@ -25,7 +24,7 @@ class ImportCreateView(generics.CreateAPIView):
 
 
 class ImportReadView(generics.RetrieveAPIView):
-    queryset = Import.objects.all()
+    queryset = Import.objects.all().order_by('citizens__citizen_id')
     serializer_class = ImportSerializer
     lookup_url_kwarg = 'import_id'
 
@@ -52,25 +51,19 @@ class CitizenUpdateView(generics.RetrieveUpdateAPIView):
         serializer = self.get_serializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         input_relatives = serializer.validated_data.get('relatives')
-        ids_to_delete = set(instance.relatives) - set(input_relatives)
-        ids_to_add = set(input_relatives) - set(instance.relatives)
-        # print('to add', ids_to_add)
-        # print('to delete', ids_to_delete)
-        # TODO disable add [3] to citizen_id=3
-        with transaction.atomic():
-            for citizen_id in ids_to_add:
-                citizen = Citizen.objects.get(import_id=instance.import_id, citizen_id=citizen_id)
-                citizen.relatives.append(instance.citizen_id)
-                citizen.save()
+        if input_relatives:
+            ids_to_delete = set(instance.relatives) - set(input_relatives)
+            ids_to_add = set(input_relatives) - set(instance.relatives)
+            with transaction.atomic():
+                for citizen_id in ids_to_add:
+                    citizen = Citizen.objects.get(import_id=instance.import_id, citizen_id=citizen_id)
+                    citizen.relatives.append(instance.citizen_id)
+                    citizen.save()
 
-            for citizen_id in ids_to_delete:
-                citizen = Citizen.objects.get(import_id=instance.import_id, citizen_id=citizen_id)
-                # try:  # TODO delete comment
-                citizen.relatives.remove(instance.citizen_id)
-                citizen.save()
-                # except:
-                #     print('у %s нет id %s' % (citizen, instance.citizen_id))
-
+                for citizen_id in ids_to_delete:
+                    citizen = Citizen.objects.get(import_id=instance.import_id, citizen_id=citizen_id)
+                    citizen.relatives.remove(instance.citizen_id)
+                    citizen.save()
             self.perform_update(serializer)
 
         if getattr(instance, '_prefetched_objects_cache', None):
@@ -95,6 +88,8 @@ class ListBirthdays(APIView):
         result = dict()
         for key in range(1, 13):
             result[str(key)] = list()
+
+        get_object_or_404(Import, pk=import_id)  # Raise 404 if it doesn't exist
         citizens = Citizen.objects.filter(import_id=import_id)
         for citizen in citizens:
             citizen_result = defaultdict(int)
@@ -115,15 +110,13 @@ class ListPercentiles(APIView):
     def get(request, import_id):
         result = list()
         date_dict = defaultdict(list)
+        get_object_or_404(Import, pk=import_id)  # Raise 404 if it doesn't exist
         citizens = list(Citizen.objects.filter(import_id=import_id).values_list('birth_date', 'town'))
         for citizen in citizens:
             town, birth_date = citizen[1], citizen[0]
             age = calculate_age(birth_date)
-            print('age is ', age)
             date_dict[town].append(age)
         for town, date_list in date_dict.items():
-            print(town)
-            print(date_list)
             result.append({
                 'town': town,
                 'p50': np.percentile([date_list], 50),

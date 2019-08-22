@@ -1,21 +1,13 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
+from django.urls import path
 from .views import *
-# Create a router and register our viewsets with it.
-router = DefaultRouter()
-# router.register(r'snippets', views.SnippetViewSet)
-# router.register(r'users', views.UserViewSet)
 
-# The API URLs are now determined automatically by the router.
 urlpatterns = [
-    path('', include(router.urls)),
 
-    path('imports/', ImportCreateView.as_view()),  # POST
-    path('imports/<int:import_id>/citizens/', ImportReadView.as_view()),  # GET
-    path('imports/<int:import_id>/citizens/<int:citizen_id>/', CitizenUpdateView.as_view()),  # PATCH
-    path('imports/<int:import_id>/citizens/birthdays/', ListBirthdays.as_view()),  # GET
-    path('imports/<int:import_id>/towns/stat/percentile/age/', ListPercentiles.as_view()),  # GET
-
-    # path('imports/<int:citizen_id>/citizens/', CitizenUpdateView.as_view()),  # GET
+    path('imports', ImportCreateView.as_view(), name='imports'),  # POST
+    path('imports/<int:import_id>/citizens', ImportReadView.as_view(), name='citizens'),  # GET
+    path('imports/<int:import_id>/citizens/<int:citizen_id>', CitizenUpdateView.as_view(),
+         name='patch_citizen'),  # PATCH
+    path('imports/<int:import_id>/citizens/birthdays', ListBirthdays.as_view(), name='birthdays'),  # GET
+    path('imports/<int:import_id>/towns/stat/percentile/age', ListPercentiles.as_view(), name='percentile'),  # GET
 
 ]
