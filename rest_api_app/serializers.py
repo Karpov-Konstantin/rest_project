@@ -25,8 +25,6 @@ class CitizenUpdateSerializer(CitizenSerializer):
         all_citizens = Citizen.objects.filter(import_id=self.instance.import_id).values_list('citizen_id', flat=True)
         if not set(validated_data).issubset(set(all_citizens)):
             raise exceptions.ValidationError('Incorrect relatives')
-        if self.instance.citizen_id in validated_data:
-            raise exceptions.ValidationError('Сan\'t be related to himself')
         return validated_data
 
     def validate(self, attrs):
