@@ -64,7 +64,7 @@ class CitizenUpdateView(generics.RetrieveUpdateAPIView):
                     citizen = Citizen.objects.get(import_id=instance.import_id, citizen_id=citizen_id)
                     citizen.relatives.remove(instance.citizen_id)
                     citizen.save()
-        self.perform_update(serializer)
+            self.perform_update(serializer)
 
         if getattr(instance, '_prefetched_objects_cache', None):
             # If 'prefetch_related' has been applied to a queryset, we need to

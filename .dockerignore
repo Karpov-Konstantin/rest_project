@@ -1,8 +1,4 @@
-*.pyc
-.idea/*
-venv/
-db.sqlite3
 */migrations/*
 !*/migrations/__init__.py
-*.log
-
+venv/
+__pycache__/
