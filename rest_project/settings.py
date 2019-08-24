@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '=%wt)5b(pluv@1s-#+ca!b_r9p!@mwi)ftgk%@^y)^t=h_49zr'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost']
 
 
 # Application definition
@@ -83,8 +83,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': 'sch_pass',
-        'HOST': 'localhost',
+        'PASSWORD': '',
+        'HOST': 'db',  # hostname in internal docker-compose network
         'PORT': '5432',
     },
 }

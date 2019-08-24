@@ -9,8 +9,7 @@ class CitizenSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Citizen
-        # exclude = ['import_id', 'id']
-        fields = ['citizen_id', 'town', 'street', 'building', 'apartment', 'name', 'birth_date', 'gender', 'relatives']
+        exclude = ['import_id', 'id']
         ordering = ['citizen_id']
 
 
@@ -18,7 +17,6 @@ class CitizenUpdateSerializer(CitizenSerializer):
     class Meta:
         model = Citizen
         exclude = ['import_id', 'id', 'citizen_id']
-        # fields = ['name', 'town', 'street', 'building', 'apartment', 'relatives']
 
     def validate_relatives(self, attrs):
         validated_data = super(CitizenUpdateSerializer, self).validate(attrs)
