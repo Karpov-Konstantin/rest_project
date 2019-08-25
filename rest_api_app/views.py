@@ -51,7 +51,7 @@ class CitizenUpdateView(generics.RetrieveUpdateAPIView):
         serializer = self.get_serializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         input_relatives = serializer.validated_data.get('relatives')
-        if input_relatives:
+        if isinstance(input_relatives, list):  # also check empty list
             ids_to_delete = set(instance.relatives) - set(input_relatives)
             ids_to_add = set(input_relatives) - set(instance.relatives)
             with transaction.atomic():

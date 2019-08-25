@@ -7,9 +7,8 @@ GENDER_FIELDS = (('male', 'male'), ('female', 'female'))
 
 
 class Import(models.Model):
-    pass
-    # def __str__(self):
-    #     return self.id
+    def __str__(self):
+        return self.id
 
 
 class Citizen(models.Model):
