@@ -69,23 +69,23 @@ git clone https://github.com/Karpov-Konstantin/rest_project.git
 
 4.3 Build docker containers
 ```bash
-docker-compose build
+sudo docker-compose build
 ```
 
 4.4 Run docker containers
 ```bash
-docker-compose up -d 
+sudo docker-compose up -d 
 ```
 
 ##### 4.5 If it's 1st run, it's necessary to make migrations
 ```bash
-docker-compose exec app python manage.py makemigrations
-docker-compose exec app python manage.py migrate
+sudo docker-compose exec app python manage.py makemigrations
+sudo docker-compose exec app python manage.py migrate
 ```
 
 ### 5. Run tests
 
 5.1 Run django tests 
 ```bash
-docker-compose exec app python manage.py tests
+sudo docker-compose exec app python manage.py tests
 ```
