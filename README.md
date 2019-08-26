@@ -1,14 +1,14 @@
-#rest project for backend-school yandex
+# REST project on DRF
 
 ## Steps installing:
-### 1. #install git:
+### 1.Install git:
 1.1. sudo apt-get update
 
 1.2. sudo apt-get install git-core
 
-### 2. #install docker:
+### 2.Install docker:
 https://docs.docker.com/install/linux/docker-ce/ubuntu/
-#####For linux:
+##### For linux:
 2.1. Install packages to allow apt to use a repository over HTTPS:
 ```bash
 sudo apt-get install \
@@ -45,10 +45,10 @@ sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io
 ```
 
-### 3. #install docker-compose
+### 3. Install docker-compose
 https://docs.docker.com/compose/install/:
 
-######For linux:
+###### For linux:
 3.1 Download the current stable release of Docker Compose:
 ```bash
 sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
@@ -77,7 +77,7 @@ docker-compose build
 docker-compose up -d 
 ```
 
-#####4.5 If it's 1st run, it's necessary to make migrations
+##### 4.5 If it's 1st run, it's necessary to make migrations
 ```bash
 docker-compose exec app python manage.py makemigrations
 docker-compose exec app python manage.py migrate
