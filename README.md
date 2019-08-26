@@ -87,5 +87,5 @@ sudo docker-compose exec app python manage.py migrate
 
 5.1 Run django tests 
 ```bash
-sudo docker-compose exec app python manage.py tests
+sudo docker-compose exec app python manage.py test
 ```
