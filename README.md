@@ -59,28 +59,33 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-
 sudo chmod +x /usr/local/bin/docker-compose
 ```
 
-### 3. Run project
-4.1 move to project directory with Dockerfile
+### 4. Run project
+4.1 Download git repository
+```bash
+git clone https://github.com/Karpov-Konstantin/rest_project.git
+```
 
-4.2 Build docker containers
+4.2 move to project directory with Dockerfile
+
+4.3 Build docker containers
 ```bash
 docker-compose build
 ```
 
-4.3 Run docker containers
+4.4 Run docker containers
 ```bash
 docker-compose up -d 
 ```
 
-#####4.3 If it's 1st run, it's necessary to make migrations
+#####4.5 If it's 1st run, it's necessary to make migrations
 ```bash
 docker-compose exec app python manage.py makemigrations
 docker-compose exec app python manage.py migrate
 ```
 
-### 4. Run tests
+### 5. Run tests
 
-4.1 Run django tests 
+5.1 Run django tests 
 ```bash
 docker-compose exec app python manage.py tests
 ```
